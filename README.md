@@ -2,9 +2,9 @@
  ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![Eclipse](https://img.shields.io/badge/Eclipse-FE7A16.svg?style=for-the-badge&logo=Eclipse&logoColor=white)
 
  ## Sobre os projetos
-Aqui estão os projetos feitos durante o 1° Semestre do curso de Desenvolvimento de Sistemas SENAI na UC Lógica de Programação.
+Aqui estão os projetos feitos durante as aulas do curso de Desenvolvimento de Sistemas SENAI na UC Lógica de Programação.
 
-## Instruções de Instalação e Uso
+## Instruções de Instalação e Uso (Para a pasta Lógica de Programação)
 ### Pré-Requisitos
 JDK (Java Development Kit) - Link: https://www.oracle.com/java/technologies/downloads/#java26
 
