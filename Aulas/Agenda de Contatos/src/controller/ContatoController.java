@@ -29,7 +29,7 @@ public class ContatoController {
 
                     break;
                 case 3:
-
+                    this.excluir();
                     break;
 
             }
@@ -47,5 +47,10 @@ public class ContatoController {
     private void cadastrar(){
        Contato contato = contatoView.telaCadastro();
        contatos.add(contato);
+    }
+
+    private void excluir(){
+        Long id = contatoView.telaExclusao();
+        contatos.removeIf(contato -> contato.getId().equals(id));
     }
 }

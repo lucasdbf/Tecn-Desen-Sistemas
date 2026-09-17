@@ -36,4 +36,11 @@ public class ContatoView {
 
         return new Contato(nome, telefone);
     }
+
+    public Long telaExclusao(){
+
+       Long id = Long.parseLong(JOptionPane.showInputDialog("EXCLUSÃO DE CONTATO\nId:"));
+
+        return id;
+    }
 }
