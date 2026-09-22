@@ -1,7 +1,4 @@
-import controller.ContatoController;
-import models.Contato;
-
-import javax.swing.*;
+import controllers.ContatoController;
 
 public class Main {
     static void main() {

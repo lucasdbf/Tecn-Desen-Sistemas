@@ -1,6 +1,7 @@
-package controller;
+package controllers;
 
 import models.Contato;
+import services.ContatoService;
 import views.ContatoView;
 
 import java.util.ArrayList;
@@ -8,11 +9,11 @@ import java.util.ArrayList;
 public class ContatoController {
 
     private final ContatoView contatoView = new ContatoView();
-    private ArrayList<Contato> contatos = new ArrayList<>();
+    private final ContatoService contatoService = new ContatoService();
 
     public void iniciar(){
-        contatos.add(new Contato("Maria Cristina", "456"));
-        contatos.add(new Contato("Lucas", "240"));
+      //  contatos.add(new Contato("Maria Cristina", "456"));
+       // contatos.add(new Contato("Lucas", "240"));
         int opcao = 0;
 
         do{
@@ -26,7 +27,7 @@ public class ContatoController {
                     this.cadastrar();
                     break;
                 case 2:
-
+                    this.alterar();
                     break;
                 case 3:
                     this.excluir();
@@ -37,20 +38,19 @@ public class ContatoController {
     }
 
     public void listar(){
-        String lista = "Lista contatos \n";
-        for (Contato contato : contatos) {
-            lista += contato.getNome() + "\n";
-        }
+        String lista = contatoService.listar();
         contatoView.telaListagem(lista);
     }
 
     private void cadastrar(){
-       Contato contato = contatoView.telaCadastro();
-       contatos.add(contato);
+       contatoView.telaCadastro();
+    }
+
+    private void alterar(){
+        contatoView.telaAlterar();
     }
 
     private void excluir(){
-        Long id = contatoView.telaExclusao();
-        contatos.removeIf(contato -> contato.getId().equals(id));
+        contatoView.telaExclusao();
     }
 }
