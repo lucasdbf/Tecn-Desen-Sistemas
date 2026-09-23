@@ -54,4 +54,14 @@ public class ContatoService {
         }
     }
 
+    public Contato buscarPorId(Long id) {
+        Contato contatoEncontrado = null;
+        for(Contato contato : contatos) {
+            if(contato.getId().equals(id)) {
+                contatoEncontrado = contato;
+                break;
+            }
+        }
+        return contatoEncontrado;
+    }
 }

@@ -81,9 +81,16 @@ public class ContatoView {
 
         try {
             Long id = Long.parseLong(inputId);
-            String nome = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nNome:");
-            String telefone = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nTelefone:");
+            Contato contatoEncontrado = contatoService.buscarPorId(id);
+            if(contatoEncontrado == null) {
+                JOptionPane.showMessageDialog(null, "Ops! Contato não encontrado!");
+                return;
+            }
+
+            String nome = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nNome:", contatoEncontrado.getNome());
+            String telefone = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nTelefone:",  contatoEncontrado.getTelefone());
             contatoService.alterar(id, nome, telefone);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ops! Id inválido.");
         }
