@@ -4,6 +4,7 @@ import models.Contato;
 import services.ContatoService;
 import views.ContatoView;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class ContatoController {
@@ -11,46 +12,46 @@ public class ContatoController {
     private final ContatoView contatoView = new ContatoView();
     private final ContatoService contatoService = new ContatoService();
 
-    public void iniciar(){
-      //  contatos.add(new Contato("Maria Cristina", "456"));
-       // contatos.add(new Contato("Lucas", "240"));
-        int opcao = 0;
-
-        do{
+    public void iniciar() {
+        int opcao;
+        do {
             opcao = contatoView.telaInicial();
-            switch (opcao){
-                case 0:
+            switch (opcao) {
                 // Listar
+                case 0:
                     this.listar();
                     break;
+                // Cadastrar
                 case 1:
                     this.cadastrar();
                     break;
+                // Alterar
                 case 2:
                     this.alterar();
                     break;
+                // Excluir
                 case 3:
                     this.excluir();
                     break;
-
             }
         } while(opcao >= 0);
     }
 
-    public void listar(){
+    private void listar() {
         String lista = contatoService.listar();
         contatoView.telaListagem(lista);
     }
 
-    private void cadastrar(){
-       contatoView.telaCadastro();
+    private void cadastrar() {
+        contatoView.telaCadastro();
     }
 
-    private void alterar(){
-        contatoView.telaAlterar();
-    }
-
-    private void excluir(){
+    private void excluir() {
         contatoView.telaExclusao();
     }
+
+    private void alterar() {
+        contatoView.telaAlteracao();
+    }
+
 }

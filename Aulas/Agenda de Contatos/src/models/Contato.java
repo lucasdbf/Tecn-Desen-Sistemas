@@ -4,17 +4,17 @@ import java.util.Objects;
 
 public class Contato {
 
+    // Especial para geração de id
     private static Long incremento = 0L;
 
+    // Atributos
     private Long id;
     private String nome;
     private String telefone;
 
-    public Contato(Long id, String nome, String telefone) {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
-    }
+    // Construtores
+
+    public Contato() {}
 
     public Contato(String nome, String telefone) {
         this.id = ++incremento;
@@ -22,9 +22,13 @@ public class Contato {
         this.telefone = telefone;
     }
 
-    public Contato() {}
+    public Contato(Long id, String nome, String telefone) {
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+    }
 
-
+    // Getters e Setters
 
     public Long getId() {
         return id;
@@ -50,13 +54,13 @@ public class Contato {
         this.telefone = telefone;
     }
 
+    // Sobrescritos
+
     @Override
     public String toString() {
-        return "Contato{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", telefone='" + telefone + '\'' +
-                '}';
+        return "Id: " + id
+                + " | Nome: " + nome
+                + " | Telefone: " + telefone;
     }
 
     @Override

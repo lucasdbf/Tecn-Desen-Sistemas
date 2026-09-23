@@ -2,54 +2,56 @@ package services;
 
 import models.Contato;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class ContatoService {
-    private static final ArrayList<Contato> contatos = new ArrayList<>();
 
-    public String listar(){
-        StringBuilder lista = new StringBuilder("Lista contatos \n");
-        for (Contato contato : contatos) {
-            lista.append(contato).append("\n");
-        }
-        return lista.toString();
-    }
+    private static ArrayList<Contato> contatos = new ArrayList<>();
 
-    public void cadastrar(String nome, String telefone) {
-        Contato contato =  new Contato(nome, telefone);
-        contatos.add(contato);
-    }
-
-    public void alterar(Long id, String nome, String telefone){
-        Contato contatoAlteracao =  new Contato(id, nome, telefone);
-        if(contatos.contains(contatoAlteracao)){
-            for(int i = 0; i < contatos.size(); i++){
-                if(contatos.get(i).getId().equals(contatoAlteracao.getId())){
-                    contatos.set(i, contatoAlteracao);
-                }
+    public String listar() {
+        String lista = "";
+        if(contatos.size() > 0) {
+            for(Contato contato : contatos) {
+                lista += contato + "\n";
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Esse id não existe, tente novamente!");
+            lista = "Nenhum contato encontrado.";
         }
+        return lista;
     }
 
-    public void excluir(Long id){
+    public String cadastrar(String nome, String telefone) {
+        String mensagem = "";
+        if(!nome.equals("") && !telefone.equals("")) {
+            Contato contato = new Contato(nome, telefone);
+            contatos.add(contato);
+            mensagem = "Contato cadastrado com sucesso!";
+        } else {
+            mensagem = "Ops! Erro ao cadastrar contato.";
+        }
+        return mensagem;
+    }
 
-        boolean existeId = false;
-
-        for (Contato contato : contatos) {
-            if (contato.getId().equals(id)) {
-                existeId = true;
-            } else {
-                existeId = false;
+    public String excluir(Long id) {
+        String mensagem = "Ops! Erro ao excluir contato.";
+        for (int i = 0; i < contatos.size(); i++) {
+            if(contatos.get(i).getId().equals(id)) {
+                contatos.remove(i);
+                mensagem = "Contato excluído com sucesso!";
+                break;
             }
         }
-        if(existeId){
-            contatos.removeIf(contato -> contato.getId().equals(id));
-        } else{
-            JOptionPane.showMessageDialog(null, "Esse id não existe, tente novamente!");
-        }
-
+        return mensagem;
     }
+
+    public void alterar(Long id, String nome, String telefone) {
+        Contato contatoAlteracao = new Contato(id, nome, telefone);
+        for (int i = 0; i < contatos.size(); i++) {
+            if(contatos.get(i).getId().equals(contatoAlteracao.getId())) {
+                contatos.set(i, contatoAlteracao);
+                break;
+            }
+        }
+    }
+
 }

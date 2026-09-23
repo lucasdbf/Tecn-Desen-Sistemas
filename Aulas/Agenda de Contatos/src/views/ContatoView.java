@@ -9,11 +9,11 @@ public class ContatoView {
 
     private final ContatoService contatoService = new ContatoService();
 
-    public int telaInicial(){
-        String[] menu = {"Listas", "Cadastrar", "Alterar", "Excluir"};
+    public int telaInicial() {
+        String[] menu = {"Listar", "Cadastrar", "Alterar", "Excluir"};
         int opcao = JOptionPane.showOptionDialog(
                 null,
-                "Menu",
+                "Menu:",
                 "AGENDA DE CONTATOS",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
@@ -21,9 +21,10 @@ public class ContatoView {
                 menu,
                 menu[0]
         );
-        return opcao; // Devolvido para o Controller
+        return opcao;
     }
-    public void telaListagem(String lista){
+
+    public void telaListagem(String lista) {
         JOptionPane.showMessageDialog(
                 null,
                 lista,
@@ -32,29 +33,60 @@ public class ContatoView {
         );
     }
 
-    public void telaCadastro(){
-        String nome = JOptionPane.showInputDialog("CADASTRO DE CONTATO\n\nNome:");
-        String telefone = JOptionPane.showInputDialog("CADASTRO DE CONTATO\n\nTelefone:");
-        contatoService.cadastrar(nome, telefone);
-    }
+    public void telaCadastro() {
+        String nome = JOptionPane.showInputDialog("CADASTRO DE CONTATO\nNome:");
+        if(nome == null) return;
+        String telefone = JOptionPane.showInputDialog("CADASTRO DE CONTATO\nTelefone:");
+        if(telefone == null) return;
 
-    public void telaAlterar(){
-        Long id = Long.parseLong(JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nId:"));
-        String nome = JOptionPane.showInputDialog("Nome:");
-        String telefone = JOptionPane.showInputDialog("Telefone:");
-
-        int confirmacao = JOptionPane.showConfirmDialog(null, "Deseja alterar?", "Confirmação", JOptionPane.YES_NO_OPTION);
-        if(confirmacao == 0){
-            contatoService.alterar(id, nome, telefone);
-        } else{
-            return;
+        try {
+            String mensagem = contatoService.cadastrar(nome, telefone);
+            JOptionPane.showMessageDialog(null, mensagem);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ops! Erro desconhecido!");
         }
     }
 
-    public void telaExclusao(){
-       Long id = Long.parseLong(JOptionPane.showInputDialog("EXCLUSÃO DE CONTATO\nId:"));
-       if(id == null) return;
+    public void telaExclusao() {
+        String lista = contatoService.listar();
+        String inputId = JOptionPane.showInputDialog(
+                "EXCLUSÃO DE CONTATO\n\n" + lista + "\nId:"
+        );
+        if(inputId == null) return;
 
-       contatoService.excluir(id);
+        try {
+            Long id = Long.parseLong(inputId);
+            int confirma = JOptionPane.showConfirmDialog(
+                    null,
+                    "Deseja realmente excluir?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+            if(confirma == 0) {
+                String mensagem = contatoService.excluir(id);
+                JOptionPane.showMessageDialog(null, mensagem);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ops! Id inválido.");
+        }
     }
+
+    public void telaAlteracao() {
+        String lista = contatoService.listar();
+        String inputId = JOptionPane.showInputDialog(
+                "ALTERAÇÃO DE CONTATO\n\n" + lista +"\nId:"
+        );
+        if(inputId == null) return;
+
+        try {
+            Long id = Long.parseLong(inputId);
+            String nome = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nNome:");
+            String telefone = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nTelefone:");
+            contatoService.alterar(id, nome, telefone);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ops! Id inválido.");
+        }
+    }
+
 }
