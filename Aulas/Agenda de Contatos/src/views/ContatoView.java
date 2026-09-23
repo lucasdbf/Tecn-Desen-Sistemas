@@ -88,8 +88,12 @@ public class ContatoView {
             }
 
             String nome = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nNome:", contatoEncontrado.getNome());
+            if(nome == null) return;
             String telefone = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nTelefone:",  contatoEncontrado.getTelefone());
-            contatoService.alterar(id, nome, telefone);
+            if(telefone == null) return;
+
+            String mensagem = contatoService.alterar(id, nome, telefone);
+            JOptionPane.showMessageDialog(null, mensagem);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ops! Id inválido.");
