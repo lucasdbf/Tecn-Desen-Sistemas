@@ -56,9 +56,10 @@ public class ContatoView {
 
         try {
             Long id = Long.parseLong(inputId);
+            Contato contatoExclusao = contatoService.buscarPorId(id);
             int confirma = JOptionPane.showConfirmDialog(
                     null,
-                    "Deseja realmente excluir?",
+                    "Deseja realmente excluir?(" + "Id: " + contatoExclusao.getId() + ")",
                     "Confirmação",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE
