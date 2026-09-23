@@ -44,14 +44,17 @@ public class ContatoService {
         return mensagem;
     }
 
-    public void alterar(Long id, String nome, String telefone) {
+    public String alterar(Long id, String nome, String telefone) {
+        String mensagem = "Ops! Erro ao alterar contato.";
         Contato contatoAlteracao = new Contato(id, nome, telefone);
         for (int i = 0; i < contatos.size(); i++) {
             if(contatos.get(i).getId().equals(contatoAlteracao.getId())) {
                 contatos.set(i, contatoAlteracao);
+                mensagem = "Contato alterado com sucesso!";
                 break;
             }
         }
+        return mensagem;
     }
 
     public Contato buscarPorId(Long id) {

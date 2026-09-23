@@ -95,5 +95,4 @@ public class ContatoView {
             JOptionPane.showMessageDialog(null, "Ops! Id inválido.");
         }
     }
-
 }
