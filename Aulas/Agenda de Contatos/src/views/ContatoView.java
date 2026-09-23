@@ -43,11 +43,18 @@ public class ContatoView {
         String nome = JOptionPane.showInputDialog("Nome:");
         String telefone = JOptionPane.showInputDialog("Telefone:");
 
-        contatoService.alterar(id, nome, telefone);
+        int confirmacao = JOptionPane.showConfirmDialog(null, "Deseja alterar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        if(confirmacao == 0){
+            contatoService.alterar(id, nome, telefone);
+        } else{
+            return;
+        }
     }
 
     public void telaExclusao(){
        Long id = Long.parseLong(JOptionPane.showInputDialog("EXCLUSÃO DE CONTATO\nId:"));
+       if(id == null) return;
+
        contatoService.excluir(id);
     }
 }
