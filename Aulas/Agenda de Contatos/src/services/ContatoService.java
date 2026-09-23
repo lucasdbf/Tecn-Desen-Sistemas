@@ -22,7 +22,7 @@ public class ContatoService {
 
     public String cadastrar(String nome, String telefone) {
         String mensagem = "";
-        if(!nome.isEmpty() && !telefone.isEmpty()) {
+        if(!nome.trim().isEmpty() && !telefone.trim().isEmpty()) {
             Contato contato = new Contato(nome, telefone);
             contatos.add(contato);
             mensagem = "Contato cadastrado com sucesso!";
@@ -46,7 +46,7 @@ public class ContatoService {
 
     public String alterar(Long id, String nome, String telefone) {
         String mensagem = "Ops! Erro ao alterar contato.";
-        if(!nome.isEmpty() && !telefone.isEmpty()) {
+        if(!nome.trim().isEmpty() && !telefone.trim().isEmpty()) {
             Contato contatoAlteracao = new Contato(id, nome, telefone);
             for (int i = 0; i < contatos.size(); i++) {
                 if(contatos.get(i).getId().equals(contatoAlteracao.getId())) {
