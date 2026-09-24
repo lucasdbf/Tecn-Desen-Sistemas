@@ -11,21 +11,24 @@ public class Contato {
     private Long id;
     private String nome;
     private String telefone;
+    private String email;
 
     // Construtores
 
     public Contato() {}
 
-    public Contato(String nome, String telefone) {
+    public Contato(String nome, String telefone, String email) {
         this.id = ++incremento;
         this.nome = nome;
         this.telefone = telefone;
+        this.email = email;
     }
 
-    public Contato(Long id, String nome, String telefone) {
+    public Contato(Long id, String nome, String telefone, String email) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
+        this.email = email;
     }
 
     // Getters e Setters
@@ -54,13 +57,21 @@ public class Contato {
         this.telefone = telefone;
     }
 
+    public String getEmail() {return email;}
+
+    public void setEmail(String email) {this.email = email;}
+
     // Sobrescritos
+
 
     @Override
     public String toString() {
-        return "Id: " + id
-                + " | Nome: " + nome
-                + " | Telefone: " + telefone;
+        return "Contato{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 
     @Override

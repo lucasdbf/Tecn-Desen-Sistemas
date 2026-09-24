@@ -38,9 +38,11 @@ public class ContatoView {
         if(nome == null) return;
         String telefone = JOptionPane.showInputDialog("CADASTRO DE CONTATO\nTelefone:");
         if(telefone == null) return;
+        String email = JOptionPane.showInputDialog("CADASTRO DE CONTATO\nEmail:");
+        if(email == null) return;
 
         try {
-            String mensagem = contatoService.cadastrar(nome, telefone);
+            String mensagem = contatoService.cadastrar(nome, telefone, email);
             JOptionPane.showMessageDialog(null, mensagem);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ops! Erro desconhecido!");
@@ -92,8 +94,9 @@ public class ContatoView {
             if(nome == null) return;
             String telefone = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nTelefone:",  contatoEncontrado.getTelefone());
             if(telefone == null) return;
+            String email = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nEmail:", contatoEncontrado.getEmail());
 
-            String mensagem = contatoService.alterar(id, nome, telefone);
+            String mensagem = contatoService.alterar(id, nome, telefone, email);
             JOptionPane.showMessageDialog(null, mensagem);
 
         } catch (Exception e) {

@@ -20,10 +20,10 @@ public class ContatoService {
         return lista;
     }
 
-    public String cadastrar(String nome, String telefone) {
+    public String cadastrar(String nome, String telefone, String email) {
         String mensagem = "";
         if(!nome.trim().isEmpty() && !telefone.trim().isEmpty()) {
-            Contato contato = new Contato(nome, telefone);
+            Contato contato = new Contato(nome, telefone, email);
             contatos.add(contato);
             mensagem = "Contato cadastrado com sucesso!";
         } else {
@@ -44,10 +44,10 @@ public class ContatoService {
         return mensagem;
     }
 
-    public String alterar(Long id, String nome, String telefone) {
+    public String alterar(Long id, String nome, String telefone, String email) {
         String mensagem = "Ops! Erro ao alterar contato.";
         if(!nome.trim().isEmpty() && !telefone.trim().isEmpty()) {
-            Contato contatoAlteracao = new Contato(id, nome, telefone);
+            Contato contatoAlteracao = new Contato(id, nome, telefone, email);
             for (int i = 0; i < contatos.size(); i++) {
                 if(contatos.get(i).getId().equals(contatoAlteracao.getId())) {
                     contatos.set(i, contatoAlteracao);
