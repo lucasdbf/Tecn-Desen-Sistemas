@@ -1,10 +1,13 @@
 package controllers;
 
+import models.Contato;
+import services.ContatoService;
 import views.ContatoView;
 
 public class ContatoController {
 
     private final ContatoView contatoView = new ContatoView();
+    private final ContatoService contatoService = new ContatoService();
 
     public void iniciar() {
         int opcao;
@@ -32,10 +35,13 @@ public class ContatoController {
     }
 
     private void listar() {
-
+        String lista =  contatoService.listar();
+        contatoView.exibir("LISTAGEM DE CONTATOS", lista);
     }
 
-    private void cadastrar() {}
+    private void cadastrar() {
+        Contato contato = contatoView.informarDados("CADASTRO DE CONTATO", new Contato());
+    }
     private void alterar() {}
     private void excluir() {}
 }
