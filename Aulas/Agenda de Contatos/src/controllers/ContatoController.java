@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class ContatoController {
 
     private final ContatoView contatoView = new ContatoView();
-    private final ContatoService contatoService = new ContatoService();
 
     public void iniciar() {
         int opcao;
@@ -38,8 +37,7 @@ public class ContatoController {
     }
 
     private void listar() {
-        String lista = contatoService.listar();
-        contatoView.telaListagem(lista);
+        contatoView.telaListagem();
     }
 
     private void cadastrar() {

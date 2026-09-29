@@ -24,7 +24,8 @@ public class ContatoView {
         return opcao;
     }
 
-    public void telaListagem(String lista) {
+    public void telaListagem() {
+        String lista = contatoService.listar();
         JOptionPane.showMessageDialog(
                 null,
                 lista,
@@ -38,11 +39,9 @@ public class ContatoView {
         if(nome == null) return;
         String telefone = JOptionPane.showInputDialog("CADASTRO DE CONTATO\nTelefone:");
         if(telefone == null) return;
-        String email = JOptionPane.showInputDialog("CADASTRO DE CONTATO\nEmail:");
-        if(email == null) return;
 
         try {
-            String mensagem = contatoService.cadastrar(nome, telefone, email);
+            String mensagem = contatoService.cadastrar(nome, telefone);
             JOptionPane.showMessageDialog(null, mensagem);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ops! Erro desconhecido!");
@@ -56,12 +55,23 @@ public class ContatoView {
         );
         if(inputId == null) return;
 
+        if(!contatoService.validarId(inputId)) {
+            JOptionPane.showMessageDialog(null, "Ops! Id inválido.");
+            return;
+        }
+
         try {
             Long id = Long.parseLong(inputId);
             Contato contatoExclusao = contatoService.buscarPorId(id);
+
+            if(contatoExclusao == null) {
+                JOptionPane.showMessageDialog(null, "Ops! Contato não encontrado.");
+                return;
+            }
+
             int confirma = JOptionPane.showConfirmDialog(
                     null,
-                    "Deseja realmente excluir?(" + "Id: " + contatoExclusao.getId() + ")",
+                    "Deseja realmente excluir o contato " + contatoExclusao.getNome() + " (Id: " + contatoExclusao.getId() + ")?",
                     "Confirmação",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE
@@ -71,7 +81,7 @@ public class ContatoView {
                 JOptionPane.showMessageDialog(null, mensagem);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ops! Id inválido.");
+            JOptionPane.showMessageDialog(null, "Ops! Erro desconhecido.");
         }
     }
 
@@ -82,25 +92,29 @@ public class ContatoView {
         );
         if(inputId == null) return;
 
+        if(!contatoService.validarId(inputId)) {
+            JOptionPane.showMessageDialog(null, "Ops! Id inválido.");
+            return;
+        }
+
         try {
             Long id = Long.parseLong(inputId);
-            Contato contatoEncontrado = contatoService.buscarPorId(id);
-            if(contatoEncontrado == null) {
-                JOptionPane.showMessageDialog(null, "Ops! Contato não encontrado!");
+            Contato contatoAlteracao = contatoService.buscarPorId(id);
+            if(contatoAlteracao == null) {
+                JOptionPane.showMessageDialog(null, "Ops! Contato não encontrado.");
                 return;
             }
 
-            String nome = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nNome:", contatoEncontrado.getNome());
+            String nome = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nNome:", contatoAlteracao.getNome());
             if(nome == null) return;
-            String telefone = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nTelefone:",  contatoEncontrado.getTelefone());
+            String telefone = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nTelefone:", contatoAlteracao.getTelefone());
             if(telefone == null) return;
-            String email = JOptionPane.showInputDialog("ALTERAÇÃO DE CONTATO\nEmail:", contatoEncontrado.getEmail());
 
-            String mensagem = contatoService.alterar(id, nome, telefone, email);
+            String mensagem = contatoService.alterar(id, nome, telefone);
             JOptionPane.showMessageDialog(null, mensagem);
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ops! Id inválido.");
         }
     }
+
 }
