@@ -41,7 +41,13 @@ public class ContatoController {
 
     private void cadastrar() {
         Contato contato = contatoView.informarDados("CADASTRO DE CONTATO", new Contato());
-        contatoService.cadastrar(contato);
+        if(contato == null) return;
+        Boolean isCadastrado = contatoService.cadastrar(contato);
+        if(isCadastrado){
+            contatoView.alertaSucesso("CADASTRO DE CONTATO", "Bem-Sucedido");
+        } else {
+            contatoView.alertaErro("CADASTRO DE CONTATO", "Mal-Sucedido");
+        }
     }
     private void alterar() {}
     private void excluir() {}

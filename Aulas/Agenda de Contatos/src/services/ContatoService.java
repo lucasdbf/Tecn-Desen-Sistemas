@@ -1,12 +1,16 @@
 package services;
 
+import exceptions.ContatoException;
 import models.Contato;
 
 import java.util.ArrayList;
 
 public class ContatoService {
 
+    private static Integer incremento = 0;
     private static ArrayList<Contato> contatos = new ArrayList<>();
+
+    // Métodos públicos
 
     public String listar() {
         String lista = "";
@@ -20,63 +24,29 @@ public class ContatoService {
         return lista;
     }
 
-    public String cadastrar(String nome, String telefone) {
-        String mensagem = "";
-        if(!nome.trim().isEmpty() && !telefone.trim().isEmpty()) {
-            Contato contato = new Contato(nome, telefone);
-            contatos.add(contato);
-            mensagem = "Contato cadastrado com sucesso!";
+    public Boolean cadastrar(Contato contato) throws ContatoException {
+        if(validarDados(contato.getNome(), contato.getTelefone(), contato.getEmail())) {
+            contato.setId(gerarId());
+            return contatos.add(contato);
         } else {
-            mensagem = "Ops! Erro ao cadastrar contato.";
-        }
-        return mensagem;
-    }
-
-    public String excluir(Long id) {
-        String mensagem = "Ops! Erro ao excluir contato.";
-        for (int i = 0; i < contatos.size(); i++) {
-            if(contatos.get(i).getId().equals(id)) {
-                contatos.remove(i);
-                mensagem = "Contato excluído com sucesso!";
-                break;
-            }
-        }
-        return mensagem;
-    }
-
-    public String alterar(Long id, String nome, String telefone) {
-        String mensagem = "Ops! Erro ao alterar contato.";
-        if(!nome.trim().isEmpty() && !telefone.trim().isEmpty()) {
-            Contato contatoAlteracao = new Contato(id, nome, telefone);
-            for (int i = 0; i < contatos.size(); i++) {
-                if (contatos.get(i).getId().equals(contatoAlteracao.getId())) {
-                    contatos.set(i, contatoAlteracao);
-                    mensagem = "Contato alterado com sucesso!";
-                    break;
-                }
-            }
-        }
-        return mensagem;
-    }
-
-    public Contato buscarPorId(Long id) {
-        Contato contatoEncontrado = null;
-        for(Contato contato : contatos) {
-            if(contato.getId().equals(id)) {
-                contatoEncontrado = contato;
-                break;
-            }
-        }
-        return contatoEncontrado;
-    }
-
-    public Boolean validarId(String id) {
-        try {
-            Long.parseLong(id);
-            return true;
-        } catch (Exception e) {
             return false;
         }
     }
 
+    private Integer gerarId() {
+        return ++incremento;
+    }
+
+    private Boolean validarDados(String nome, Long telefone, String email) throws ContatoException {
+        String erros = "";
+        if(nome.trim().isEmpty()) erros += "\n- Nome é um campo obrigatório";
+        if(telefone == null) erros += "\n- Telefone é um campo obrigatório e deve ser numérico.";
+        if(email.trim().isEmpty()) erros += "\n- E-mail é um campo obrigatório";
+
+        if(!erros.isEmpty()) {
+            throw new ContatoException("Ops! Erros encontrados:" + erros);
+        }
+
+        return true;
+    }
 }

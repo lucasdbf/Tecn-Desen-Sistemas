@@ -43,4 +43,12 @@ public class ContatoView {
         contato.setTelefone(Utilidade.converterLong(telefone));
         return contato;
     }
+
+    public void alertaSucesso(String titulo, String texto) {
+        JOptionPane.showMessageDialog(null, texto, titulo, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void alertaErro(String titulo, String texto) {
+        JOptionPane.showMessageDialog(null, texto, titulo, JOptionPane.ERROR_MESSAGE);
+    }
 }

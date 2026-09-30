@@ -4,37 +4,37 @@ import java.util.Objects;
 
 public class Contato {
 
-    // Especial para geração de id
-    private static Long incremento = 0L;
-
     // Atributos
-    private Long id;
+    private Integer id;
     private String nome;
-    private String telefone;
+    private Long telefone;
+    private String email;
 
     // Construtores
 
     public Contato() {}
 
-    public Contato(String nome, String telefone) {
-        this.id = ++incremento;
+    public Contato(String nome, Long telefone, String email) {
         this.nome = nome;
         this.telefone = telefone;
+        this.email = email;
     }
 
-    public Contato(Long id, String nome, String telefone) {
+    public Contato(Integer id, String nome, Long telefone, String email) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
+        this.email = email;
     }
 
     // Getters e Setters
 
-    public Long getId() {
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,12 +46,20 @@ public class Contato {
         this.nome = nome;
     }
 
-    public String getTelefone() {
+    public Long getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(Long telefone) {
         this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     // Sobrescritos
@@ -60,7 +68,8 @@ public class Contato {
     public String toString() {
         return "Id: " + id
                 + " | Nome: " + nome
-                + " | Telefone: " + telefone;
+                + " | Telefone: " + telefone
+                + " | E-mail: " + email;
     }
 
     @Override
@@ -74,4 +83,5 @@ public class Contato {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }
