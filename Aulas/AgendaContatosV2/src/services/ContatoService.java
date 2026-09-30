@@ -49,4 +49,23 @@ public class ContatoService {
 
         return true;
     }
+
+    public Contato buscarPorId(Integer id){
+        for(Contato contato : contatos) {
+            if(contato.getId().equals(id)) {
+                return contato;
+            }
+        }
+        return null;
+    }
+
+    public Boolean excluir(Integer id){
+        for(int i = 0; i < contatos.size(); i++) {
+            if(contatos.get(i).getId().equals(id)) {
+                contatos.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -29,7 +29,7 @@ public class ContatoController {
                     break;
                 // Excluir
                 case 3:
-//                    this.excluir();
+                    this.excluir();
                     break;
             }
         } while(opcao >= 0);
@@ -52,6 +52,36 @@ public class ContatoController {
             }
         } catch (Exception e) {
             contatoView.alertaErro("CADASTRO DE CONTATO", e.getMessage());
+        }
+    }
+
+    private void excluir() {
+        try{
+            Integer id = contatoView.informarId("EXCLUSÃO DE CONTATO", contatoService.listar());
+            if(id == null) return;
+
+            Contato contatoExclusao = contatoService.buscarPorId(id);
+            if(contatoExclusao == null){
+                contatoView.alertaErro("EXCLUSÃO DE CONTATO", "Ops! Contato inexistente.");
+            }
+
+            int confirma = contatoView.alertaConfirmacao(
+                    "EXCLUSÃO DE CONTATO",
+                    "Deseja realmente excluir o contato "
+                    + contatoExclusao.getNome()
+                    + " (Id: "  + contatoExclusao.getId() + ")?"
+            );
+
+            if(confirma == 0){
+                if(contatoService.excluir(id)){
+                    contatoView.alertaSucesso("EXCLUSÃO DE CONTATO", "Contato excluido com sucesso!");
+                } else{
+                    contatoView.alertaErro("EXCLUSÃO DE CONTATO", "Ops! Erro ao excluir contato.");
+                }
+            }
+
+        }catch(Exception e){
+            contatoView.alertaErro("EXCLUSÃO DE CONTATO", e.getMessage());
         }
     }
 }

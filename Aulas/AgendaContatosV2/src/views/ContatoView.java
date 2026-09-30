@@ -76,4 +76,24 @@ public class ContatoView {
         );
     }
 
+    public int alertaConfirmacao(String titulo, String mensagem) {
+        return JOptionPane.showConfirmDialog(
+                null,
+                mensagem,
+                titulo,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+    }
+
+    public Integer informarId(String titulo, String lista) {
+        String inputId = ler(titulo, lista + "\nId:", null);
+        if(inputId == null) return null;
+
+        Integer id = Utilidade.converterInteger(inputId);
+        if(id == null) alertaErro(titulo, "Ops! Id inválido.");
+
+        return id;
+    }
+
 }
