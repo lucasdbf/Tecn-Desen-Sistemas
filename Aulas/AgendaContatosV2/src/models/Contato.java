@@ -4,12 +4,21 @@ import java.util.Objects;
 
 public class Contato {
 
+    // Atributos
     private Integer id;
     private String nome;
     private Long telefone;
     private String email;
 
+    // Construtores
+
     public Contato() {}
+
+    public Contato(String nome, Long telefone, String email) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+    }
 
     public Contato(Integer id, String nome, Long telefone, String email) {
         this.id = id;
@@ -18,11 +27,8 @@ public class Contato {
         this.email = email;
     }
 
-    public Contato(String nome, Long telefone, String email) {
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
-    }
+    // Getters e Setters
+
 
     public Integer getId() {
         return id;
@@ -56,14 +62,14 @@ public class Contato {
         this.email = email;
     }
 
+    // Sobrescritos
+
     @Override
     public String toString() {
-        return "Contato{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", telefone=" + telefone +
-                ", email='" + email + '\'' +
-                '}';
+        return "Id: " + id
+                + " | Nome: " + nome
+                + " | Telefone: " + telefone
+                + " | E-mail: " + email;
     }
 
     @Override
@@ -77,4 +83,5 @@ public class Contato {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }

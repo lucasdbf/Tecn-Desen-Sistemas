@@ -3,13 +3,14 @@ package services;
 import exceptions.ContatoException;
 import models.Contato;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class ContatoService {
 
-    private static ArrayList<Contato> contatos = new ArrayList<>();
     private static Integer incremento = 0;
+    private static ArrayList<Contato> contatos = new ArrayList<>();
+
+    // Métodos públicos
 
     public String listar() {
         String lista = "";
@@ -23,25 +24,29 @@ public class ContatoService {
         return lista;
     }
 
-    public boolean cadastrar(Contato contato) {
-        contato.setId(gerarId());
-        return contatos.add(contato);
+    public Boolean cadastrar(Contato contato) throws ContatoException {
+        if(validarDados(contato.getNome(), contato.getTelefone(), contato.getEmail())) {
+            contato.setId(gerarId());
+            return contatos.add(contato);
+        } else {
+            return false;
+        }
     }
 
-    private Integer gerarId(){
+    private Integer gerarId() {
         return ++incremento;
     }
 
     private Boolean validarDados(String nome, Long telefone, String email) throws ContatoException {
         String erros = "";
-        if(nome.trim().isEmpty()) {erros += "Ops! Nome é um campo obrigatório";}
-        if(telefone == null) erros += "Ops! Telefone é obrigatório e deve ser númerico";
-        if(email.trim().isEmpty()) {erros += "Ops! Email é um campo obrigatório";}
+        if(nome.trim().isEmpty()) erros += "\n- Nome é um campo obrigatório";
+        if(telefone == null) erros += "\n- Telefone é um campo obrigatório e deve ser numérico.";
+        if(email.trim().isEmpty()) erros += "\n- E-mail é um campo obrigatório";
 
         if(!erros.isEmpty()) {
             throw new ContatoException("Ops! Erros encontrados:" + erros);
         }
+
         return true;
     }
-
 }
