@@ -22,4 +22,8 @@ public class ContatoService {
         return lista;
     }
 
+    public boolean cadastrar(Contato contato) {
+        return contatos.add(contato);
+    }
+
 }

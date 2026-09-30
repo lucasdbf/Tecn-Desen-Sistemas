@@ -2,7 +2,7 @@ package utils;
 
 public class Utilidade {
 
-    public static converterLong(String dado){
+    public static Long converterLong(String dado){
         try {
             return Long.parseLong(dado);
         } catch (Exception e) {

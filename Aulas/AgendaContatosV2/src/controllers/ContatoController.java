@@ -41,6 +41,7 @@ public class ContatoController {
 
     private void cadastrar() {
         Contato contato = contatoView.informarDados("CADASTRO DE CONTATO", new Contato());
+        contatoService.cadastrar(contato);
     }
     private void alterar() {}
     private void excluir() {}

@@ -1,6 +1,7 @@
 package views;
 
 import models.Contato;
+import utils.Utilidade;
 
 import javax.swing.*;
 
@@ -37,8 +38,9 @@ public class ContatoView {
         String telefone = ler(titulo, "Telefone:", contato.getTelefone());
         if(telefone == null || telefone.equals("")) return null;
 
-
-
+        contato.setNome(nome);
+        contato.setEmail(email);
+        contato.setTelefone(Utilidade.converterLong(telefone));
         return contato;
     }
 }
