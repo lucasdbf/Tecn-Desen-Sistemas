@@ -23,7 +23,12 @@ public class ContatoService {
     }
 
     public boolean cadastrar(Contato contato) {
+        contato.setId(gerarId());
         return contatos.add(contato);
+    }
+
+    private Integer gerarId(){
+        return ++incremento;
     }
 
 }
