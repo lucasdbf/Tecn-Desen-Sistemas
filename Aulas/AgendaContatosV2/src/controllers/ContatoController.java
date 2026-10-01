@@ -63,6 +63,7 @@ public class ContatoController {
             Contato contatoExclusao = contatoService.buscarPorId(id);
             if(contatoExclusao == null){
                 contatoView.alertaErro("EXCLUSÃO DE CONTATO", "Ops! Contato inexistente.");
+                return;
             }
 
             int confirma = contatoView.alertaConfirmacao(
