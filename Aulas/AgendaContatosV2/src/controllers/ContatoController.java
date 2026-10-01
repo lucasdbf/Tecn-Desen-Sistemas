@@ -25,7 +25,7 @@ public class ContatoController {
                     break;
                 // Alterar
                 case 2:
-//                    this.alterar();
+                    this.alterar();
                     break;
                 // Excluir
                 case 3:
@@ -82,6 +82,41 @@ public class ContatoController {
 
         }catch(Exception e){
             contatoView.alertaErro("EXCLUSÃO DE CONTATO", e.getMessage());
+        }
+    }
+
+    private void alterar(){
+        try {
+            Integer id = contatoView.informarId("ALTERAÇÃO DE CONTATO", contatoService.listar());
+            if(id == null) return;
+
+            Contato contatoOriginal = contatoService.buscarPorId(id);
+            if(contatoOriginal == null){
+                contatoView.alertaErro("ALTERAÇÃO DE CONTATO", "Ops! Contato inexistente.");
+                return;
+            }
+
+            // Edita uma cópia para não alterar o objeto da lista antes da validação
+            Contato contatoAlteracao = contatoView.informarDados(
+                    "ALTERAÇÃO DE CONTATO",
+                    new Contato(
+                            contatoOriginal.getId(),
+                            contatoOriginal.getNome(),
+                            contatoOriginal.getTelefone(),
+                            contatoOriginal.getEmail()
+                    )
+            );
+            if(contatoAlteracao == null) return;
+
+            if(contatoService.alterar(contatoAlteracao)) {
+                contatoView.alertaSucesso("ALTERAÇÃO DE CONTATO",  "Contato alterado com sucesso!");
+            } else {
+                contatoView.alertaErro("ALTERAÇÃO DE CONTATO", "Ops! Erro ao alterar contato.");
+            }
+
+
+        } catch (Exception e) {
+            contatoView.alertaErro("ALTERAÇÃO DE CONTATO", e.getMessage());
         }
     }
 }

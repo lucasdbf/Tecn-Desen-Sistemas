@@ -33,6 +33,18 @@ public class ContatoService {
         }
     }
 
+    public Boolean alterar(Contato contato) throws ContatoException {
+        if(validarDados(contato.getNome(), contato.getTelefone(), contato.getEmail())) {
+            for(int i = 0; i < contatos.size(); i++) {
+                if(contatos.get(i).getId().equals(contato.getId())) {
+                    contatos.set(i, contato);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private Integer gerarId() {
         return ++incremento;
     }
