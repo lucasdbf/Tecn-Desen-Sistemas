@@ -25,7 +25,7 @@ public class TarefaController {
                     break;
                 // Alterar
                 case 2:
-                   // this.alterar();
+                   this.alterar();
                     break;
                 // Excluir
                 case 3:
@@ -85,5 +85,37 @@ public class TarefaController {
         }
     }
 
+    private void alterar(){
+        try {
+            Integer id = tarefaView.informarId("ALTERAÇÃO DE TAREFA", tarefaService.listar());
+            if(id == null) return;
 
+            Tarefa tarefaOriginal = tarefaService.buscarPorId(id);
+            if(tarefaOriginal == null){
+                tarefaView.alertaErro("ALTERAÇÃO DE TAREFA", "Ops! Tarefa inexistente.");
+                return;
+            }
+
+            // Edita uma cópia para não alterar o objeto da lista antes da validação
+            Tarefa tarefaAlteracao = tarefaView.informarDados(
+                    "ALTERAÇÃO DE CONTATO",
+                    new Tarefa(
+                            tarefaOriginal.getId(),
+                            tarefaOriginal.getTitulo(),
+                            tarefaOriginal.getDescricao()
+                    )
+            );
+            if(tarefaAlteracao == null) return;
+
+            if(tarefaService.alterar(tarefaAlteracao)) {
+                tarefaView.alertaSucesso("ALTERAÇÃO DE TAREFA",  "Tarefa alterada com sucesso!");
+            } else {
+                tarefaView.alertaErro("ALTERAÇÃO DE TAREFA", "Ops! Erro ao alterar tarefa.");
+            }
+
+
+        } catch (Exception e) {
+            tarefaView.alertaErro("ALTERAÇÃO DE TAREFA", e.getMessage());
+        }
+    }
 }

@@ -66,6 +66,18 @@ public class TarefaService {
         return false;
     }
 
+    public Boolean alterar(Tarefa tarefa) throws TarefaException {
+        if(validarDados(tarefa.getTitulo(), tarefa.getDescricao())) {
+            for(int i = 0; i < tarefas.size(); i++) {
+                if(tarefas.get(i).getId().equals(tarefa.getId())) {
+                    tarefas.set(i, tarefa);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
 
 }
