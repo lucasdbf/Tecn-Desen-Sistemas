@@ -1,6 +1,7 @@
 package views;
 
 import models.Tarefa;
+import utils.Utilidades;
 
 import javax.swing.*;
 
@@ -70,6 +71,26 @@ public class TarefaView {
                 titulo,
                 JOptionPane.ERROR_MESSAGE
         );
+    }
+
+    public int alertaConfirmacao(String titulo, String mensagem) {
+        return JOptionPane.showConfirmDialog(
+                null,
+                mensagem,
+                titulo,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+    }
+
+    public Integer informarId(String titulo, String lista) {
+        String inputId = ler(titulo, lista + "\nId:", null);
+        if(inputId == null) return null;
+
+        Integer id = Utilidades.converterInteger(inputId);
+        if(id == null) alertaErro(titulo, "Ops! Id inválido.");
+
+        return id;
     }
 
 

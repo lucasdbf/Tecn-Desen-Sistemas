@@ -47,6 +47,25 @@ public class TarefaService {
         return true;
     }
 
+    public Tarefa buscarPorId(Integer id){
+        for(Tarefa tarefa : tarefas) {
+            if(tarefa.getId().equals(id)) {
+                return tarefa;
+            }
+        }
+        return null;
+    }
+
+    public Boolean excluir(Integer id){
+        for(int i = 0; i < tarefas.size(); i++) {
+            if(tarefas.get(i).getId().equals(id)) {
+                tarefas.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
 }

@@ -29,7 +29,7 @@ public class TarefaController {
                     break;
                 // Excluir
                 case 3:
-                   // this.excluir();
+                   this.excluir();
                     break;
             }
         } while(opcao >= 0);
@@ -41,7 +41,7 @@ public class TarefaController {
 
     private void cadastrar() throws TarefaException {
         try {
-            Tarefa tarefa = tarefaView.informarDados("CADASTRO DE CONTATO", new Tarefa());
+            Tarefa tarefa = tarefaView.informarDados("CADASTRO DE TAREFA", new Tarefa());
             if(tarefa == null) return;
 
             if(tarefaService.cadastrar(tarefa)) {
@@ -51,6 +51,37 @@ public class TarefaController {
             }
         } catch (Exception e) {
             tarefaView.alertaErro("CADASTRO DE TAREFA", e.getMessage());
+        }
+    }
+
+    private void excluir() {
+        try{
+            Integer id = tarefaView.informarId("EXCLUSÃO DE TAREFA", tarefaService.listar());
+            if(id == null) return;
+
+            Tarefa tarefaExclusao = tarefaService.buscarPorId(id);
+            if(tarefaExclusao == null){
+                tarefaView.alertaErro("EXCLUSÃO DE TAREFA", "Ops! Tarefa inexistente.");
+                return;
+            }
+
+            int confirma = tarefaView.alertaConfirmacao(
+                    "EXCLUSÃO DE TAREFA",
+                    "Deseja realmente excluir a tarefa "
+                            + tarefaExclusao.getTitulo()
+                            + " (Id: "  + tarefaExclusao.getId() + ")?"
+            );
+
+            if(confirma == 0){
+                if(tarefaService.excluir(id)){
+                    tarefaView.alertaSucesso("EXCLUSÃO DE TAREFA", "Tarefa excluida com sucesso!");
+                } else{
+                    tarefaView.alertaErro("EXCLUSÃO DE TAREFA", "Ops! Erro ao excluir tarefa.");
+                }
+            }
+
+        }catch(Exception e){
+            tarefaView.alertaErro("EXCLUSÃO DE TAREFA", e.getMessage());
         }
     }
 
