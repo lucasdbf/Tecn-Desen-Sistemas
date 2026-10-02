@@ -56,6 +56,10 @@ public class TarefaController {
 
     private void excluir() {
         try{
+            if(tarefaService.estaVazia()) {
+                tarefaView.alertaErro("EXCLUSÃO DE TAREFA", "Ops! Nenhuma tarefa cadastrada.");
+                return;
+            }
             Integer id = tarefaView.informarId("EXCLUSÃO DE TAREFA", tarefaService.listar());
             if(id == null) return;
 
@@ -87,6 +91,10 @@ public class TarefaController {
 
     private void alterar(){
         try {
+            if(tarefaService.estaVazia()) {
+                tarefaView.alertaErro("ALTERAÇÃO DE TAREFA", "Ops! Nenhuma tarefa cadastrada.");
+                return;
+            }
             Integer id = tarefaView.informarId("ALTERAÇÃO DE TAREFA", tarefaService.listar());
             if(id == null) return;
 
@@ -96,9 +104,8 @@ public class TarefaController {
                 return;
             }
 
-            // Edita uma cópia para não alterar o objeto da lista antes da validação
             Tarefa tarefaAlteracao = tarefaView.informarDados(
-                    "ALTERAÇÃO DE CONTATO",
+                    "ALTERAÇÃO DE TAREFA",
                     new Tarefa(
                             tarefaOriginal.getId(),
                             tarefaOriginal.getTitulo(),

@@ -22,6 +22,12 @@ public class TarefaService {
         return lista;
     }
 
+    // adicionei isso para nao abrir a aba alterar e excluir se nao existir nenhuma tarefa, nao é necessario colocar
+    public Boolean estaVazia() {
+        return tarefas.isEmpty();
+    }
+    // ------------
+
     public Boolean cadastrar(Tarefa tarefa) throws TarefaException {
         if(validarDados(tarefa.getTitulo(), tarefa.getDescricao())) {
             tarefa.setId(gerarId());
