@@ -1,5 +1,6 @@
 package services;
 
+import exceptions.TarefaException;
 import models.Tarefa;
 
 import java.util.ArrayList;
@@ -16,10 +17,36 @@ public class TarefaService {
                 lista += tarefa + "\n";
             }
         } else {
-            lista = "Nenhum contato encontrado.";
+            lista = "Nenhuma tarefa encontrada.";
         }
         return lista;
     }
+
+    public Boolean cadastrar(Tarefa tarefa) throws TarefaException {
+        if(validarDados(tarefa.getTitulo(), tarefa.getDescricao())) {
+            tarefa.setId(gerarId());
+            return tarefas.add(tarefa);
+        } else {
+            return false;
+        }
+    }
+
+    private Integer gerarId() {
+        return ++incremento;
+    }
+
+    private Boolean validarDados(String tituloTarefa, String descricao) throws TarefaException {
+        String erros = "";
+        if(tituloTarefa.trim().isEmpty()) erros += "\n- Título é um campo obrigatório";
+        if(descricao.trim().isEmpty()) erros += "\n- Descrição é um campo obrigatório";
+
+        if(!erros.isEmpty()) {
+            throw new TarefaException("Ops! Erros encontrados:" + erros);
+        }
+
+        return true;
+    }
+
 
 
 }

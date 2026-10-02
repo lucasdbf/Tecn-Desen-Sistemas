@@ -1,6 +1,7 @@
 package controllers;
 
 import exceptions.TarefaException;
+import models.Tarefa;
 import services.TarefaService;
 import views.TarefaView;
 
@@ -20,7 +21,7 @@ public class TarefaController {
                     break;
                 // Cadastrar
                 case 1:
-                   // this.cadastrar();
+                   this.cadastrar();
                     break;
                 // Alterar
                 case 2:
@@ -38,6 +39,20 @@ public class TarefaController {
         tarefaView.exibir("LISTAGEM DE TAREFAS", lista);
     }
 
+    private void cadastrar() throws TarefaException {
+        try {
+            Tarefa tarefa = tarefaView.informarDados("CADASTRO DE CONTATO", new Tarefa());
+            if(tarefa == null) return;
+
+            if(tarefaService.cadastrar(tarefa)) {
+                tarefaView.alertaSucesso("CADASTRO DE TAREFA", "Tarefa cadastrada com sucesso!");
+            } else {
+                tarefaView.alertaErro("CADASTRO DE TAREFA", "Ops! Erro ao cadastrar tarefa.");
+            }
+        } catch (Exception e) {
+            tarefaView.alertaErro("CADASTRO DE TAREFA", e.getMessage());
+        }
+    }
 
 
 }
