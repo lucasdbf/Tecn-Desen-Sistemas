@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Main {
     static void main() {
@@ -21,6 +18,13 @@ public class Main {
                 System.out.print("Email: " + resultado.getString("email") + " ");
                 System.out.println();
             }
+
+            String sql = "INSERT INTO tbcontato (nome, telefone, email) VALUES (?, ?, ?)";
+            PreparedStatement preparacao = conexao.prepareStatement(sql);
+            preparacao.setString(1, "Juca");
+            preparacao.setLong(2, 999);
+            preparacao.setString(3, "juca@gmail.com");
+            int qtdLinhasAfetadas = preparacao.executeUpdate();
         } catch(Exception e){
             throw new RuntimeException(e);
         }
