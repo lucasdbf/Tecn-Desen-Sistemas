@@ -36,8 +36,12 @@ public class ContatoController {
     }
 
     private void listar() {
-        String lista = contatoService.listar();
-        contatoView.exibir("LISTAGEM DE CONTATOS", lista);
+        try {
+            String lista = contatoService.listar();
+            contatoView.exibir("LISTAGEM DE CONTATOS", lista);
+        } catch (Exception e) {
+            contatoView.alertaErro("LISTAGEM DE CONTATOS", e.getMessage());
+        }
     }
 
     private void cadastrar() throws ContatoException {

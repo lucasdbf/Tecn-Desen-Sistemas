@@ -1,33 +1,42 @@
 package services;
 
+import dao.ContatoDao;
 import exceptions.ContatoException;
 import models.Contato;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ContatoService {
 
-    private static Integer incremento = 0;
-    private static ArrayList<Contato> contatos = new ArrayList<>();
+    private final ContatoDao contatoDao = new ContatoDao();
 
     // Métodos públicos
 
-    public String listar() {
-        String lista = "";
-        if(contatos.size() > 0) {
-            for(Contato contato : contatos) {
-                lista += contato + "\n";
+    public String listar() throws ContatoException {
+        try {
+            ArrayList<Contato> contatos = contatoDao.listar();
+            String lista = "";
+            if(contatos.size() > 0) {
+                for(Contato contato : contatos) {
+                    lista += contato + "\n";
+                }
+            } else {
+                lista = "Nenhum contato encontrado.";
             }
-        } else {
-            lista = "Nenhum contato encontrado.";
+            return lista;
+        } catch (SQLException e) {
+            throw erroBanco(e);
         }
-        return lista;
     }
 
     public Boolean cadastrar(Contato contato) throws ContatoException {
         if(validarDados(contato.getNome(), contato.getTelefone(), contato.getEmail())) {
-            contato.setId(gerarId());
-            return contatos.add(contato);
+            try {
+                return contatoDao.inserir(contato);
+            } catch (SQLException e) {
+                throw erroBanco(e);
+            }
         } else {
             return false;
         }
@@ -35,18 +44,13 @@ public class ContatoService {
 
     public Boolean alterar(Contato contato) throws ContatoException {
         if(validarDados(contato.getNome(), contato.getTelefone(), contato.getEmail())) {
-            for(int i = 0; i < contatos.size(); i++) {
-                if(contatos.get(i).getId().equals(contato.getId())) {
-                    contatos.set(i, contato);
-                    return true;
-                }
+            try {
+                return contatoDao.alterar(contato);
+            } catch (SQLException e) {
+                throw erroBanco(e);
             }
         }
         return false;
-    }
-
-    private Integer gerarId() {
-        return ++incremento;
     }
 
     private Boolean validarDados(String nome, Long telefone, String email) throws ContatoException {
@@ -62,22 +66,23 @@ public class ContatoService {
         return true;
     }
 
-    public Contato buscarPorId(Integer id){
-        for(Contato contato : contatos) {
-            if(contato.getId().equals(id)) {
-                return contato;
-            }
+    public Contato buscarPorId(Integer id) throws ContatoException {
+        try {
+            return contatoDao.buscarPorId(id);
+        } catch (SQLException e) {
+            throw erroBanco(e);
         }
-        return null;
     }
 
-    public Boolean excluir(Integer id){
-        for(int i = 0; i < contatos.size(); i++) {
-            if(contatos.get(i).getId().equals(id)) {
-                contatos.remove(i);
-                return true;
-            }
+    public Boolean excluir(Integer id) throws ContatoException {
+        try {
+            return contatoDao.excluir(id);
+        } catch (SQLException e) {
+            throw erroBanco(e);
         }
-        return false;
+    }
+
+    private ContatoException erroBanco(SQLException e) {
+        return new ContatoException("Ops! Erro ao acessar o banco de dados: " + e.getMessage());
     }
 }
