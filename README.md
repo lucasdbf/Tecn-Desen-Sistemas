@@ -4,7 +4,7 @@
  ## Sobre os projetos
 Aqui estão os projetos feitos durante as aulas do curso de Desenvolvimento de Sistemas SENAI na UC Lógica de Programação.
 
-## Instruções de Instalação e Uso (Para a pasta Lógica de Programação)
+## Instruções de Instalação e Uso
 ### Pré-Requisitos
 JDK (Java Development Kit) - Link: https://www.oracle.com/java/technologies/downloads/#java26
 
