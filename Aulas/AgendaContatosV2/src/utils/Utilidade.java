@@ -18,4 +18,12 @@ public class Utilidade {
         }
     }
 
+    public static Double converterDouble(String dado) {
+        try {
+            return Double.parseDouble(dado);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }
