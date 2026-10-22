@@ -11,6 +11,8 @@ public class ContatoTest {
         System.out.println("=== TESTES ===");
         listar();
         cadastrar();
+        alterar();
+        excluir();
     }
 
     // Teste automatizado da funcionalidade de listagem
